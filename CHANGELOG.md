@@ -15,6 +15,11 @@ it according to semantic versioning. For example, if your PR adds a breaking cha
 should change the heading of the (upcoming) version to include a major version bump.
 
 -->
+# 5.24.1
+
+## @rjsf/core 
+
+- Fixed issue with additional properties that have defaults not being editable/deletable, fixing [#3759](https://github.com/rjsf-team/react-jsonschema-form/issues/3759).
 
 # 5.24.0
 

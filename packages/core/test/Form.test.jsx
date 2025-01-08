@@ -936,6 +936,48 @@ describeRepeated('Form common', (createFormComponent) => {
       });
     });
 
+    it('should be able to change default key without duplications', () => {
+      const schema = {
+        type: 'object',
+        additionalProperties: {
+          type: 'string',
+        },
+        default: {
+          foo: 'bar',
+        },
+      };
+      const { node, onChange } = createFormComponent({ schema });
+
+      fireEvent.blur(node.querySelector('#root_foo-key'), {
+        target: { value: 'baz' },
+      });
+
+      sinon.assert.calledWithMatch(onChange.lastCall, {
+        formData: {
+          baz: 'bar',
+        },
+      });
+    });
+
+    it('should be able to remove additional property default key', () => {
+      const schema = {
+        type: 'object',
+        additionalProperties: {
+          type: 'string',
+        },
+        default: {
+          foo: 'bar',
+        },
+      };
+      const { node, onChange } = createFormComponent({ schema });
+
+      fireEvent.click(node.querySelector('[title="Remove"]'));
+
+      sinon.assert.calledWithMatch(onChange.lastCall, {
+        formData: {},
+      });
+    });
+
     it('should submit a combination of properties and additional properties defaults', () => {
       const schema = {
         type: 'object',

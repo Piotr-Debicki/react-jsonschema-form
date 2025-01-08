@@ -34,6 +34,7 @@ import {
   ValidatorType,
   Experimental_DefaultFormStateBehavior,
   Experimental_CustomMergeAllOf,
+  ADDITIONAL_PROPERTIES_KEY,
 } from '@rjsf/utils';
 import _forEach from 'lodash/forEach';
 import _get from 'lodash/get';
@@ -390,6 +391,8 @@ export default class Form<
     const liveValidate = 'liveValidate' in props ? props.liveValidate : this.props.liveValidate;
     const mustValidate = edit && !props.noValidate && liveValidate;
     const rootSchema = schema;
+    const hasAdditionalProperties = ADDITIONAL_PROPERTIES_KEY in rootSchema;
+    const shouldGenerateAdditionalPropertyDefaults = hasAdditionalProperties && !edit;
     const experimental_defaultFormStateBehavior =
       'experimental_defaultFormStateBehavior' in props
         ? props.experimental_defaultFormStateBehavior
@@ -415,7 +418,12 @@ export default class Form<
         experimental_customMergeAllOf
       );
     }
-    const formData: T = schemaUtils.getDefaultFormState(schema, inputFormData) as T;
+    let formData = inputFormData;
+    // If additional properties and defaults are present, generate the defaults once
+    if (shouldGenerateAdditionalPropertyDefaults || !hasAdditionalProperties) {
+      formData = schemaUtils.getDefaultFormState(schema, inputFormData) as T;
+    }
+
     const _retrievedSchema = this.updateRetrievedSchema(
       retrievedSchema ?? schemaUtils.retrieveSchema(schema, formData)
     );

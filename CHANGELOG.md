@@ -21,6 +21,17 @@ should change the heading of the (upcoming) version to include a major version b
 
 - Fixed issue with additional properties that have defaults not being editable/deletable, fixing [#3759](https://github.com/rjsf-team/react-jsonschema-form/issues/3759).
 
+# 5.24.1
+
+## @rjsf/utils
+
+- Fixed documentation for `getChangedFields()`
+
+## Dev / docs / playground
+
+- Updated the peer dependencies for `@rjsf/*` to be `5.24.x`
+- Added documentation for `getChangedFields()`
+
 # 5.24.0
 
 ## @rjsf/core
